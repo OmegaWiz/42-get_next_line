@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/02 17:31:30 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:07:23 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		}
 		dst[i] = 0;
 	}
-	while (src[i])
-		i++;
+	if (src)
+	{
+		while (src[i])
+			i++;
+	}
 	return (i);
 }
 
@@ -88,7 +91,7 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	dst_len;
 	size_t	src_len;
@@ -96,19 +99,17 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	size_t	result;
 	size_t	min;
 
-	if (dst == NULL)
-		dst = malloc(sizeof(src));
 	i = 0;
 	dst_len = ft_strlen(dst);
 	src_len = ft_strlen(src);
-	if (dst_len < dstsize)
+	if (dst_len < size)
 		min = dst_len;
 	else
-		min = dstsize;
+		min = size;
 	result = src_len + min;
-	if (dstsize == 0 || dstsize < dst_len)
+	if (size == 0 || size <= dst_len)
 		return (result);
-	while (src[i] != '\0' && dst_len + i < dstsize - 1)
+	while (src[i] != '\0' && dst_len + i < size - 1)
 	{
 		dst[dst_len + i] = src[i];
 		i++;

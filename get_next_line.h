@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:45:00 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/06 16:58:21 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:01:26 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 #  define OPEN_MAX 1024
 # endif
 
+void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
-size_t	ft_strlcat(char *dst, const char *src, size_t size);
+char	*ft_strchr(const char *s, int c);
 
 char	*get_next_line(int fd);
 

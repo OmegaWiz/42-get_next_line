@@ -6,31 +6,88 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:56:06 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 16:15:10 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:48:40 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*gnl_fnr(char *s1)
+char	*ft_strjoinfree(char **s1, char **s2)
+{
+	char	*str;
+
+	if (!*s1 && !*s2)
+		return (NULL);
+	if (!*s1)
+	{
+		str = *s2;
+		*s2 = 0;
+		return (str);
+	}
+	if (!*s2)
+	{
+		str = *s1;
+		*s1 = 0;
+		return (str);
+	}
+	str = (char *) malloc(ft_strlen(*s1) + ft_strlen(*s2) + 1);
+	if (!str)
+		return (str);
+	ft_strlcpy(str, *s1, ft_strlen(*s1) + 1);
+	ft_strlcat(str, *s2, ft_strlen(str) + ft_strlen(*s2) + 1);
+	free(*s1);
+	free(*s2);
+	return (str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	size_t	i;
+
+	c %= 256;
+	i = 0;
+	if (s == 0 || s == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		if (s[i] == c)
+			return ((char *)(s + i));
+		i++;
+	}
+	if (s[i] == c)
+		return ((char *)(s + i));
+	return (NULL);
+}
+
+char	*gnl_free_return(char **s1, char **s2, char **s3)
 {
 	if (s1)
 	{
-		free(s1);
-		s1 = NULL;
+		if (*s1)
+			free(*s1);
+	}
+	if (s2)
+	{
+		if (*s2)
+			free(*s2);
+	}
+	if (s3)
+	{
+		if (*s3)
+			free(*s3);
 	}
 	return (NULL);
 }
 
-char	*gnl_split(char **buf)
+char	*gnl_split(char **buf, ssize_t read_len)
 {
 	char	*line;
 	char	*tmp;
 	char	*ptr;
 
-	if (ft_strlen(*buf) == 0)
-		return (gnl_fnr(*buf));
+	if (*buf == NULL)
+		return (NULL);
 	tmp = ft_strchr(*buf, 10);
 	if (tmp == NULL)
 	{
@@ -61,20 +118,20 @@ char	*get_next_line(int fd)
 	{
 		len = ft_strlen(buf[fd]);
 		tmp = buf[fd];
-		buf[fd] = (char *) calloc(len + BUFFER_SIZE + 1, 1);
+		buf[fd] = (char *) malloc(len + BUFFER_SIZE + 1);
 		if (!buf[fd])
 			return (NULL);
 		len = ft_strlcpy(buf[fd], tmp, len + 1);
 		if (tmp != NULL)
-			gnl_fnr(tmp);
+			free(tmp);
 		read_len = read(fd, buf[fd] + len, BUFFER_SIZE);
 		if (read_len < 0)
-			return (gnl_fnr(buf[fd]));
+			return (gnl_free_return(&buf[fd], NULL, NULL));
 		if (read_len == 0)
 			break;
 		buf[fd][len + read_len] = 0;
 	}
-	return (gnl_split(&buf[fd]));
+	return (gnl_split(&buf[fd], read_len));
 }
 /*
 int	gnl_lrsplit(char **buf, char **tmp_buf, char **tmp_read, ssize_t len)

@@ -6,11 +6,12 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/06 18:00:24 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:15:20 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stddef.h>
 
 size_t	ft_strlen(const char *s)
 {
@@ -46,31 +47,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char			*str;
-	unsigned int	n;
-
-	if (!s)
-		return (NULL);
-	n = ft_strlen(s);
-	if (n == 0)
-		return (NULL);
-	if (start >= n)
-	{
-		str = malloc(sizeof(char));
-		ft_strlcpy(str, "", 1);
-		return (str);
-	}
-	if (len > n - start)
-		len = n - start;
-	str = malloc((len + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	ft_strlcpy(str, (s + start), len + 1);
-	return (str);
-}
-
 char	*ft_strdup(const char *s1)
 {
 	char	*str;
@@ -88,6 +64,31 @@ char	*ft_strdup(const char *s1)
 		i++;
 	}
 	str[i] = 0;
+	return (str);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char			*str;
+	unsigned int	n;
+	size_t			i;
+
+	if (!s)
+		return (NULL);
+	n = ft_strlen(s);
+	if (n == 0)
+		return (NULL);
+	if (start >= n)
+		return (ft_strdup(""));
+	if (len > n - start)
+		len = n - start;
+	str = (char *) malloc((len + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len + 1)
+		str[i++] = 0;
+	ft_strlcpy(str, (s + start), len + 1);
 	return (str);
 }
 

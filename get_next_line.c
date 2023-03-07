@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:56:06 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 10:28:37 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:44:09 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 char	*ft_strjoinfree(char **s1, char **s2)
 {
 	char	*str;
-	size_t	i;
 
+	if (!*s1 && !*s2)
+		return (NULL);
 	if (!*s1)
 	{
-		str = ft_strdup(*s2);
-		free(*s2);
+		str = *s2;
+		*s2 = 0;
 		return (str);
 	}
 	if (!*s2)
-		return (ft_strdup(*s1));
-	if (!*s1 && !*s2)
-		return (NULL);
-	str = malloc(ft_strlen(*s1) + ft_strlen(*s2) + 1);
-	i = 0;
+	{
+		str = *s1;
+		*s1 = 0;
+		return (str);
+	}
+	str = (char *) malloc(ft_strlen(*s1) + ft_strlen(*s2) + 1);
 	if (!str)
 		return (str);
-	while (i < ft_strlen(*s1) + ft_strlen(*s2) + 1)
-		str[i++] = 0;
 	ft_strlcpy(str, *s1, ft_strlen(*s1) + 1);
 	ft_strlcat(str, *s2, ft_strlen(str) + ft_strlen(*s2) + 1);
 	free(*s1);
@@ -96,6 +96,7 @@ int	gnl_lrsplit(char **buf, char **tmp_buf, char **tmp_read, ssize_t len)
 	*tmp_read = ft_substr(*buf, 0, ft_strchr(*buf, len) - *buf + 1);
 	if (!*tmp_read)
 		return (gnl_free_return(buf, tmp_buf, NULL) != NULL);
+	free(*buf);
 	*buf = *tmp_buf;
 	*tmp_buf = 0;
 	return (1);
@@ -112,7 +113,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	while (ft_strchr(buf[fd], '\n') == NULL)
 	{
-		tmp_read = (char *) malloc(BUFFER_SIZE);
+		tmp_read = (char *) malloc(BUFFER_SIZE + 1);
 		read_len = read(fd, tmp_read, BUFFER_SIZE);
 		if (read_len < 0)
 			return (gnl_free_return(&buf[fd], NULL, &tmp_read));

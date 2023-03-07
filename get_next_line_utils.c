@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 16:01:37 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:16:43 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*ft_strchr(const char *s, int c)
 
 	c %= 256;
 	i = 0;
-	if (s == 0 || s == NULL)
+	if (s == NULL)
 		return (NULL);
 	while (s[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:56:06 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 11:44:09 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:59:26 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	gnl_lrsplit(char **buf, char **tmp_buf, char **tmp_read, ssize_t len)
 {
 	if (!*buf)
 		return (0);
+	if (len == 0)
+		free(*tmp_read);
 	len = 10;
 	if (ft_strchr(*buf, len) == NULL)
 	{
@@ -91,7 +93,7 @@ int	gnl_lrsplit(char **buf, char **tmp_buf, char **tmp_read, ssize_t len)
 		return (1);
 	}
 	*tmp_buf = ft_substr(ft_strchr(*buf, len) + 1, 0, ft_strlen(*buf));
-	if (!*tmp_buf)
+	if (!*tmp_buf && ft_strchr(*buf, len) - *buf != (long) ft_strlen(*buf) - 1)
 		return (gnl_free_return(buf, NULL, NULL) != NULL);
 	*tmp_read = ft_substr(*buf, 0, ft_strchr(*buf, len) - *buf + 1);
 	if (!*tmp_read)

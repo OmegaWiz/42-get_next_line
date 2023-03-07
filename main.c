@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:03:02 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 11:01:29 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:48:22 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	int		fd;
 	char	*line;
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("gnlTester/files/nl", O_RDWR);
 	line = (char *) malloc(BUFFER_SIZE);
 	do {
 		free(line);

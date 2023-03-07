@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:03:02 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/06 16:26:33 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 09:50:49 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(void)
 	char	*line;
 
 	fd = open("text.txt", O_RDONLY);
+	line = malloc(1);
 	do {
 		free(line);
 		line = get_next_line(fd);

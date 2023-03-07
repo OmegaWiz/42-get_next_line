@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/06 16:07:23 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:00:24 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	size_t	i;
 
 	i = 0;
-	if (size > 0 && src)
+	if (size > 0 && src != NULL)
 	{
 		while (src[i] && i < (size - 1))
 		{
@@ -38,7 +38,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		}
 		dst[i] = 0;
 	}
-	if (src)
+	if (!src)
 	{
 		while (src[i])
 			i++;
@@ -51,7 +51,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char			*str;
 	unsigned int	n;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
 	n = ft_strlen(s);
 	if (n == 0)

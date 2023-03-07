@@ -6,12 +6,32 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 13:00:47 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:58:20 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stddef.h>
+#include <limits.h>
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*s;
+	size_t	i;
+
+	if (nmemb >= __SIZE_MAX__ && size >= __SIZE_MAX__)
+		return (NULL);
+	s = malloc(nmemb * size);
+	if (!s)
+		return (NULL);
+	i = 0;
+	*(char *) (s + i) = 0;
+	/*
+	while (i < nmemb * size)
+		*(char *)(s + (i++)) = 0;
+	*/
+	return (s);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -54,7 +74,7 @@ char	*ft_strdup(const char *s1)
 
 	if (!s1)
 		return (NULL);
-	str = (char *)malloc(ft_strlen(s1) + 1);
+	str = (char *) calloc(ft_strlen(s1) + 1, 1);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -67,57 +87,21 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strchr(const char *s, int c)
 {
-	char			*str;
-	unsigned int	n;
-	size_t			i;
-
-	if (!s)
-		return (NULL);
-	n = ft_strlen(s);
-	if (n == 0)
-		return (NULL);
-	if (start >= n)
-		return (ft_strdup(""));
-	if (len > n - start)
-		len = n - start;
-	str = (char *) malloc((len + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	i = 0;
-	while (s[start + i] && i < len)
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	str[i] = 0;
-	return (str);
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t	dst_len;
-	size_t	src_len;
 	size_t	i;
-	size_t	result;
-	size_t	min;
 
+	c %= 256;
 	i = 0;
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
-	if (dst_len < size)
-		min = dst_len;
-	else
-		min = size;
-	result = src_len + min;
-	if (size == 0 || size <= dst_len)
-		return (result);
-	while (src[i] != '\0' && dst_len + i < size - 1)
+	if (s == NULL)
+		return (NULL);
+	while (s[i])
 	{
-		dst[dst_len + i] = src[i];
+		if (s[i] == c)
+			return ((char *)(s + i));
 		i++;
 	}
-	dst[dst_len + i] = '\0';
-	return (result);
+	if (s[i] == c)
+		return ((char *)(s + i));
+	return (NULL);
 }

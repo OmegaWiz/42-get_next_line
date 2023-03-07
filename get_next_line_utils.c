@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 16:16:43 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:58:20 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	if (!s)
 		return (NULL);
 	i = 0;
+	*(char *) (s + i) = 0;
+	/*
 	while (i < nmemb * size)
 		*(char *)(s + (i++)) = 0;
+	*/
 	return (s);
 }
 

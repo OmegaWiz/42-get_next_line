@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:56:06 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 12:57:34 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 14:06:56 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,12 @@ char	*gnl_split(char **buf, ssize_t read_len)
 		return (NULL);
 	line = *buf;
 	*buf = 0;
-	if (ft_strchr(*buf, 10) == NULL)
+	if (ft_strchr(line, 10) == NULL)
+	{
+		if (read_len == 0)
+			return (NULL);
 		return (line);
+	}
 	line_len = ft_strchr(line, 10) - line + 1;
 	if (line[line_len] != 0)
 		*buf = ft_strdup(line + line_len);

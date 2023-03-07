@@ -6,11 +6,13 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:56:06 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 11:59:26 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:57:34 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stddef.h>
+#include <sys/types.h>
 
 char	*ft_strjoinfree(char **s1, char **s2)
 {
@@ -79,6 +81,54 @@ char	*gnl_free_return(char **s1, char **s2, char **s3)
 	return (NULL);
 }
 
+char	*gnl_split(char **buf, ssize_t read_len)
+{
+	char	*line;
+	char	*tmp;
+	size_t	line_len;
+
+	if (!*buf)
+		return (NULL);
+	line = *buf;
+	*buf = 0;
+	if (ft_strchr(*buf, 10) == NULL)
+		return (line);
+	line_len = ft_strchr(line, 10) - line + 1;
+	if (line[line_len] != 0)
+		*buf = ft_strdup(line + line_len);
+	line[line_len] = 0;
+	//can protect 0
+	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*buf[OPEN_MAX];
+	char		*tmp;
+	ssize_t		read_len;
+	size_t		len;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	while (ft_strchr(buf[fd], '\n') == NULL)
+	{
+		len = ft_strlen(buf[fd]);
+		tmp = buf[fd];
+		buf[fd] = (char *) malloc(len + BUFFER_SIZE + 1);
+		if (!buf[fd])
+			return (NULL);
+		len = ft_strlcpy(buf[fd], tmp, len + 1);
+		free(tmp);
+		read_len = read(fd, buf[fd] + len, BUFFER_SIZE);
+		if (read_len < 0)
+			return (gnl_free_return(&buf[fd], NULL, NULL));
+		buf[fd][len + read_len] = 0;
+		if (read_len == 0)
+			break;
+	}
+	return (gnl_split(&buf[fd], read_len));
+}
+/*
 int	gnl_lrsplit(char **buf, char **tmp_buf, char **tmp_read, ssize_t len)
 {
 	if (!*buf)
@@ -95,15 +145,14 @@ int	gnl_lrsplit(char **buf, char **tmp_buf, char **tmp_read, ssize_t len)
 	*tmp_buf = ft_substr(ft_strchr(*buf, len) + 1, 0, ft_strlen(*buf));
 	if (!*tmp_buf && ft_strchr(*buf, len) - *buf != (long) ft_strlen(*buf) - 1)
 		return (gnl_free_return(buf, NULL, NULL) != NULL);
-	*tmp_read = ft_substr(*buf, 0, ft_strchr(*buf, len) - *buf + 1);
-	if (!*tmp_read)
-		return (gnl_free_return(buf, tmp_buf, NULL) != NULL);
-	free(*buf);
+	(*buf)[ft_strchr(*buf, len) + 1 - *buf] = 0;
+	*tmp_read = *buf;
 	*buf = *tmp_buf;
 	*tmp_buf = 0;
 	return (1);
 }
-
+*/
+/*
 char	*get_next_line(int fd)
 {
 	static char	*buf[OPEN_MAX];
@@ -132,3 +181,4 @@ char	*get_next_line(int fd)
 		return (NULL);
 	return (tmp_read);
 }
+*/

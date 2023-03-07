@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 11:15:20 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/07 13:00:47 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	if (!s)
+	if (!s || s == NULL || s == 0)
 		return (0);
 	while (s[i])
 		i++;
@@ -39,7 +39,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		}
 		dst[i] = 0;
 	}
-	if (!src)
+	if (src)
 	{
 		while (src[i])
 			i++;
@@ -54,7 +54,7 @@ char	*ft_strdup(const char *s1)
 
 	if (!s1)
 		return (NULL);
-	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + 1));
+	str = (char *)malloc(ft_strlen(s1) + 1);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -86,9 +86,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (str == NULL)
 		return (NULL);
 	i = 0;
-	while (i < len + 1)
-		str[i++] = 0;
-	ft_strlcpy(str, (s + start), len + 1);
+	while (s[start + i] && i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = 0;
 	return (str);
 }
 

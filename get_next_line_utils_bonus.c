@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:22:50 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/03/07 16:58:20 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/03/08 08:18:40 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stddef.h>
 #include <limits.h>
 
@@ -25,11 +25,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	if (!s)
 		return (NULL);
 	i = 0;
-	*(char *) (s + i) = 0;
-	/*
-	while (i < nmemb * size)
-		*(char *)(s + (i++)) = 0;
-	*/
+	*(char *)(s + i) = 0;
 	return (s);
 }
 
